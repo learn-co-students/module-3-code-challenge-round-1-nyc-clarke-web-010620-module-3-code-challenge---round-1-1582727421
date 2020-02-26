@@ -31,7 +31,7 @@ Today we're building an app for viewing, liking, and commenting on a single pict
 A user of your app must be able to do the following things:
 
 - As a user, when the page loads, I should see:
-  - an image
+  - [x] an image
   - any comments that image has
   - the number of likes that image has
 
@@ -51,7 +51,7 @@ For this challenge it is important to work iteratively: one feature at a time, b
 
 We have provided a series of prioritized steps to help you break down your approach this problem:
 
-## Step 1 - Get the Image Data
+## [x]Step 1 - Get the Image Data
 
 When the page loads, you will need to make a request to the API to get the data about your picture. The API follows RESTful conventions, but *make sure you read the API documentation* to familiarize yourself with the models, their associations, and the available endpoints of the API.
 
