@@ -14,17 +14,21 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener("click",e => {
     switch(true){
       case(e.target.id === "like_button"):
-        addLike()
+        addLike();
+        break;
+      case(e.target.id === "unlike_button"):
+        unLike();
         break;
       case(e.target.id === "delete_button"):
-          e.preventDefault()
-          let id = e.target.parentNode.dataset.id
-          deleteComment(id)
-          e.target.parentNode.remove()
+          e.preventDefault();
+          let id = e.target.parentNode.dataset.id;
+          deleteComment(id);
+          e.target.parentNode.remove();
         break;
       case(e.target.type === "submit"):
-        e.preventDefault()
-        createComment()
+        e.preventDefault();
+        createComment();
+        e.target.parentNode.children[0].value = "";
         break;
     };
     
@@ -60,16 +64,16 @@ function loadcontent(imageJSON){
 function loadComments(comment, tag){
   let li = document.createElement("li");
   li.innerText = comment.content ;
-  li.dataset.id = comment.id
-  button = createButton()
-  li.append(button)
+  li.dataset.id = comment.id;
+  button = createButton();
+  li.append(button);
   tag.append(li);
 }
  
  function addLike(){
   let likes = document.getElementById("likes");
   let num = parseInt(likes.innerText.split(" ")[1])
-  num++
+  num++;
   likes.innerText = "Likes: " + num;
 
   fetch(likeURL, {
@@ -80,12 +84,27 @@ function loadComments(comment, tag){
     },
     body: JSON.stringify({image_id: imageId})
   })
+}
 
+function unLike(){
+  let likes = document.getElementById("likes");
+  let num = parseInt(likes.innerText.split(" ")[1])
+  num--;
+  likes.innerText = "Likes: " + num;
+
+  fetch(likeURL, {
+    method: "POST",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({image_id: imageId})
+  })
 }
  
  function createComment(){
   let commentbox = document.getElementById("comment_input");
-  let words = commentbox.value
+  let words = commentbox.value;
 
   fetch(commentsURL, {
     method: "POST",
@@ -98,20 +117,20 @@ function loadComments(comment, tag){
       content: words
     })
   }).then(resp => resp.json()).then(comment =>{
-    let ul = document.getElementById("comments")
-    loadComments(comment, ul)
+    let ul = document.getElementById("comments");
+    loadComments(comment, ul);
   })
 
 }
 
 function createButton(){
-  let button = document.createElement("button")
-  button.id = "delete_button"
-  button.innerText ="Delete"
-  return button 
+  let button = document.createElement("button");
+  button.id = "delete_button";
+  button.innerText ="Delete";
+  return button;
 }
 
 function deleteComment(id) {
   fetch(`${commentsURL}/${id}`, {
-    method: "DELETE"})
+    method: "DELETE"});
 }
