@@ -23,6 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
   function addComment(comment){
   let newComment = document.createElement('li')
   newComment.innerText = comment.content
+      //bonus part 1
+      let deleteButton = document.createElement('button')
+      deleteButton.className = 'btn-danger'
+      deleteButton.innerText = 'Delete'
+      deleteButton.dataset.id = comment.id
+      deleteButton.addEventListener('click', (e) => deleteComment(e))
+      newComment.append(deleteButton)
   commentsList.append(newComment)
   }
 
@@ -55,5 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
       body: JSON.stringify({'image_id':image.id, 'content':form.comment.value})
     })
   })
+  }
+  //bonus part 2
+  function deleteComment(e){
+    fetch(`${commentsURL}/${e.target.dataset.id}`,{method: 'Delete'})
+    .then(e.target.parentNode.remove())
   }
 })
