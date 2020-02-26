@@ -1,5 +1,5 @@
 //brought these to global scope 
-//so I can use them in my helper functions
+//so I can use them in my helper functions which I defined outside
 let imageId = 4670 
 const imageURL = `https://randopic.herokuapp.com/images/${imageId}`
 const likeURL = `https://randopic.herokuapp.com/likes/`
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   commentForm = document.getElementById("comment_form")
   commentForm.addEventListener("submit", createComment)
 
-
+  //delete comments
   commentsSlot.addEventListener("click", deleteComment)     
 
 })
@@ -60,6 +60,7 @@ function renderImage(body){
 
 }
 
+//add a like
 function increaseLikes(e){
   let currentLikes = parseInt(likesSlot.innerText)
   
@@ -77,6 +78,7 @@ function increaseLikes(e){
   })
 }
 
+//create a comment
 function createComment(e){
   e.preventDefault()
   const inputBox = document.getElementById("comment_input")
@@ -109,6 +111,7 @@ function createComment(e){
   commentForm.reset()
 }
 
+//delete a comment
 function deleteComment(e){
     if (e.target.tagName === "BUTTON"){
         let thisCommentId = e.target.dataset.id
