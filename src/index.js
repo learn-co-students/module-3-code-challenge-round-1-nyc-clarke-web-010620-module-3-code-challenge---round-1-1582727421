@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   .then(resp => resp.json())
   .then(image => display(image))
 
+  //display
   function display(image){
     const imageSlot = document.getElementById('image')
     imageSlot.src = `${image.url}`
@@ -17,9 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const likesSlot = document.getElementsByTagName('span')[0]
     likesSlot.innerText = `Likes: ${image.like_count}`
     const commentsList = document.getElementById('comments')
-    commentsList.innerText = "Comments:"
+        //extra
+        commentsList.innerHTML = '<h4>Comments:</h4>'
     image.comments.forEach(comment => addComment(comment))
 
+  //comments
   function addComment(comment){
   let newComment = document.createElement('li')
   newComment.innerText = comment.content
@@ -33,7 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
   commentsList.append(newComment)
   }
 
+  //like
   const likeButton = document.getElementById('like_button')
+      //extra
+      likeButton.className = 'btn-success'
   likeButton.addEventListener('click', () => {
     let numLikes = parseInt(likesSlot.innerText.split(" ")[1])
     numLikes++
@@ -48,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   })
 
+  //comment form
   const form = document.getElementById('comment_form')
   form.addEventListener('submit', (e) => {
     e.preventDefault()
