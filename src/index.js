@@ -16,25 +16,25 @@ document.addEventListener('DOMContentLoaded', () => {
     let picture = document.getElementById('image')
     let name = document.getElementById('name')
     let likes = document.getElementById('likes')
-    let ul = document.getElementById('comments')
-
+    
     picture.src = image.url
     name.innerText = image.name
     likes.innerText = image['like_count']
-
-    image.comments.forEach(comment => {
-      let li = document.createElement('li')
-      li.id = comment.id
-
-      li.innerHTML = `
-      ${comment.content} <button class="delete"> Delete </delete>
-      `
-
-      ul.append(li)
-    }
-    )
-
+    
+    image.comments.forEach(addComment)
   })
+  
+  function addComment(comment){
+    let ul = document.getElementById('comments')
+    let li = document.createElement('li')
+    li.id = comment.id
+
+    li.innerHTML = `
+    ${comment.content} <button class="delete"> Delete </delete>
+    `
+
+    ul.append(li)
+  }
 
   document.addEventListener('click', event => {
     if (event.target.id === "like_button"){
@@ -67,12 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('submit', event =>{
     event.preventDefault()
     let comment = event.target.comment.value
-    let ul = document.getElementById('comments')
-
-    let li = document.createElement('li')
-    li.innerText = comment
-
-    ul.append(li)
   
     fetch(commentsURL, {
       method: "POST",
@@ -85,8 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
           content: comment
         })
     })
-    .then(resp => resp.json)
-    .then(comment => console.log(comment))
+    .then(resp => resp.json())
+    .then(comment => addComment(comment))
+
     document.getElementById("comment_form").reset()
   })
 
